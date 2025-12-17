@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>استور جيمينج</title>
+<style>
+body{
+  font-family: Arial, sans-serif;
+  margin:0;
+  background:#0b1c3f;
+  color:#fff;
+  text-align:center;
+}
+.glow-text{
+  color:#fff;
+  text-shadow: 0 0 5px #fff, 0 0 10px #ff00ff, 0 0 20px #ff00ff, 0 0 40px #ff00ff;
+}
+button{
+  padding:15px 30px;
+  margin:20px;
+  font-size:18px;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+  background: linear-gradient(45deg,#ff0080,#ff8c00);
+  color:#fff;
+  box-shadow: 0 0 10px #ff0080, 0 0 20px #ff8c00;
+  transition: 0.3s;
+}
+button:hover{
+  transform: scale(1.1);
+  box-shadow: 0 0 20px #ff0080,0 0 30px #ff8c00;
+}
+.hidden{
+  display:none;
+}
+a{
+  color:#0ff;
+  text-decoration:none;
+  font-weight:bold;
+}
+a:hover{
+  text-decoration:underline;
+}
+.container{
+  padding:50px;
+}
+</style>
+</head>
+<body>
+
+<div class="container" id="welcomePage">
+  <h1 class="glow-text">مرحبًا بك في موقع استور جيمينج</h1>
+  <p>لتنشيط الخيارات الصوتية اضغط 1 لدخول الموقع، أو 2 للتواصل مع المالك على واتساب</p>
+  <button onclick="chooseOption(1)">1 - دخول الموقع</button>
+  <button onclick="chooseOption(2)">2 - واتساب المالك</button>
+</div>
+
+<div class="container hidden" id="loadingPage">
+  <h2 class="glow-text" id="loadingText">جاري التوجيه...</h2>
+</div>
+
+<div class="container hidden" id="mainPage">
+  <h1 class="glow-text">أهلا بك في استور جيمينج</h1>
+  <p>أرخص الأسعار لدخول الجروب انزل تحت خالص</p>
+
+  <div style="margin:30px;">
+    <h3>شحن شدات ببجي</h3>
+    <ul style="list-style:none; padding:0;">
+      <li>60 شدة - 50 جنيه</li>
+      <li>325 شدة - 250 جنيه</li>
+      <li>660 شدة - 480 جنيه</li>
+    </ul>
+
+    <h3>كارت سيارة</h3>
+    <p>السعر: 8000 جنيه</p>
+  </div>
+
+  <div style="margin:30px;">
+    <button onclick="window.location.href='https://chat.whatsapp.com/DUS3Tw1UKqhICikuwxKnvs?mode=hqrt3'">
+      دخول جروب الأسوار
+    </button>
+    <br>
+    <button onclick="window.location.href='https://wa.me/201206561893'">
+      التواصل مع المالك على واتساب
+    </button>
+  </div>
+</div>
+
+<script>
+// تشغيل صوت الترحيب
+window.onload = function(){
+  let msg = new SpeechSynthesisUtterance("مرحبا بك في موقع استور جيمينج، للدخول دوس واحد للتوجه للموقع، وللتواصل مع المالك اضغط اثنين");
+  msg.lang = "ar-SA";
+  window.speechSynthesis.speak(msg);
+}
+
+function chooseOption(option){
+  document.getElementById('welcomePage').classList.add('hidden');
+  document.getElementById('loadingPage').classList.remove('hidden');
+
+  if(option === 1){
+    document.getElementById('loadingText').innerText = "جاري توجيهك إلى الموقع...";
+    setTimeout(function(){
+      document.getElementById('loadingPage').classList.add('hidden');
+      document.getElementById('mainPage').classList.remove('hidden');
+    },2000);
+  }else{
+    document.getElementById('loadingText').innerText = "جاري توجيهك إلى واتساب المالك...";
+    setTimeout(function(){
+      window.location.href = 'https://wa.me/201206561893';
+    },2000);
+  }
+}
+</script>
+
+</body>
+</html>
