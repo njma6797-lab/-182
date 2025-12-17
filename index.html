@@ -2,24 +2,27 @@
 <html lang="ar">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ستورجيمنج</title>
 <style>
-body{
+body {
   font-family: Arial, sans-serif;
   margin:0;
-  background:#0b1c3f;
-  color:#fff;
+  padding:0;
+  background: #0b1c3f;
+  color: #fff;
   text-align:center;
 }
-.glow-text{
-  font-size: 50px;
+.glow-text {
+  font-size: 3em;
   color:#fff;
-  text-shadow: 0 0 5px #fff, 0 0 10px #ff00ff, 0 0 20px #ff00ff, 0 0 40px #ff00ff;
+  text-shadow: 0 0 10px #fff, 0 0 20px #ff00ff, 0 0 40px #ff00ff, 0 0 60px #ff00ff;
+  margin:20px 0;
 }
 button{
   padding:15px 30px;
   margin:20px;
-  font-size:20px;
+  font-size:1.2em;
   border:none;
   border-radius:12px;
   cursor:pointer;
@@ -44,11 +47,11 @@ a:hover{
   text-decoration:underline;
 }
 .container{
-  padding:50px;
+  padding:30px 10px;
 }
 .box{
   background:#1a2a5c;
-  margin:20px auto;
+  margin:15px auto;
   padding:20px;
   border-radius:15px;
   max-width:400px;
@@ -59,12 +62,21 @@ a:hover{
   justify-content:space-between;
   padding:10px;
   border-bottom:1px solid #fff;
+  font-size:1em;
 }
 .success{
   color: #00ff00;
   font-weight:bold;
   margin:20px 0;
-  font-size:18px;
+  font-size:1.2em;
+}
+input, select{
+  width:100%;
+  padding:10px;
+  margin-top:10px;
+  border-radius:8px;
+  border:none;
+  font-size:1em;
 }
 </style>
 </head>
@@ -72,8 +84,8 @@ a:hover{
 
 <!-- صفحة الترحيب -->
 <div class="container" id="welcomePage">
-  <h1 class="glow-text">مرحبا بك في ستورجيمنج</h1>
-  <p>للدخول اضغط 1، للتواصل مع المالك على واتساب اضغط 2</p>
+  <h1 class="glow-text">مرحبًا بك في ستورجيمنج</h1>
+  <p style="font-size:1.2em;">للقيام بالخيارات اضغط 1 لدخول الموقع، 2 للتواصل مع المالك على واتساب</p>
   <button onclick="chooseOption(1)">1 - دخول الموقع</button>
   <button onclick="chooseOption(2)">2 - واتساب المالك</button>
 </div>
@@ -83,7 +95,7 @@ a:hover{
   <h2 class="glow-text" id="loadingText">جاري التوجيه...</h2>
 </div>
 
-<!-- الصفحة الرئيسية للموقع -->
+<!-- الصفحة الرئيسية -->
 <div class="container hidden" id="mainPage">
   <h1 class="glow-text">ستورجيمنج</h1>
 
@@ -137,12 +149,12 @@ function now(){
   return new Date().toLocaleString();
 }
 
-// صوت الترحيب
-window.onload = function(){
-  let msg = new SpeechSynthesisUtterance("مرحبا بك في موقع ستورجيمنج، للدخول اضغط واحد، للتواصل مع المالك اضغط اثنين");
-  msg.lang = "ar-SA";
-  window.speechSynthesis.speak(msg);
-}
+// تشغيل صوت الترحيب بعد تحميل الصفحة
+document.addEventListener("DOMContentLoaded", function() {
+    let msg = new SpeechSynthesisUtterance("مرحبا بك في موقع ستورجيمنج، للدخول اضغط واحد، للتواصل مع المالك اضغط اثنين");
+    msg.lang = "ar-SA";
+    window.speechSynthesis.speak(msg);
+});
 
 function chooseOption(option){
   document.getElementById('welcomePage').classList.add('hidden');
