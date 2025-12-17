@@ -2,7 +2,7 @@
 <html lang="ar">
 <head>
 <meta charset="UTF-8">
-<title>استور جيمينج</title>
+<title>ستورجيمنج</title>
 <style>
 body{
   font-family: Arial, sans-serif;
@@ -12,24 +12,25 @@ body{
   text-align:center;
 }
 .glow-text{
+  font-size: 50px;
   color:#fff;
   text-shadow: 0 0 5px #fff, 0 0 10px #ff00ff, 0 0 20px #ff00ff, 0 0 40px #ff00ff;
 }
 button{
   padding:15px 30px;
   margin:20px;
-  font-size:18px;
+  font-size:20px;
   border:none;
-  border-radius:10px;
+  border-radius:12px;
   cursor:pointer;
   background: linear-gradient(45deg,#ff0080,#ff8c00);
   color:#fff;
   box-shadow: 0 0 10px #ff0080, 0 0 20px #ff8c00;
-  transition: 0.3s;
+  transition:0.3s;
 }
 button:hover{
   transform: scale(1.1);
-  box-shadow: 0 0 20px #ff0080,0 0 30px #ff8c00;
+  box-shadow:0 0 20px #ff0080,0 0 30px #ff8c00;
 }
 .hidden{
   display:none;
@@ -45,52 +46,100 @@ a:hover{
 .container{
   padding:50px;
 }
+.box{
+  background:#1a2a5c;
+  margin:20px auto;
+  padding:20px;
+  border-radius:15px;
+  max-width:400px;
+  box-shadow:0 0 15px #ff00ff,0 0 25px #ff8c00;
+}
+.table div{
+  display:flex;
+  justify-content:space-between;
+  padding:10px;
+  border-bottom:1px solid #fff;
+}
+.success{
+  color: #00ff00;
+  font-weight:bold;
+  margin:20px 0;
+  font-size:18px;
+}
 </style>
 </head>
 <body>
 
+<!-- صفحة الترحيب -->
 <div class="container" id="welcomePage">
-  <h1 class="glow-text">مرحبًا بك في موقع استور جيمينج</h1>
-  <p>لتنشيط الخيارات الصوتية اضغط 1 لدخول الموقع، أو 2 للتواصل مع المالك على واتساب</p>
+  <h1 class="glow-text">مرحبا بك في ستورجيمنج</h1>
+  <p>للدخول اضغط 1، للتواصل مع المالك على واتساب اضغط 2</p>
   <button onclick="chooseOption(1)">1 - دخول الموقع</button>
   <button onclick="chooseOption(2)">2 - واتساب المالك</button>
 </div>
 
+<!-- صفحة التحميل -->
 <div class="container hidden" id="loadingPage">
   <h2 class="glow-text" id="loadingText">جاري التوجيه...</h2>
 </div>
 
+<!-- الصفحة الرئيسية للموقع -->
 <div class="container hidden" id="mainPage">
-  <h1 class="glow-text">أهلا بك في استور جيمينج</h1>
-  <p>أرخص الأسعار لدخول الجروب انزل تحت خالص</p>
+  <h1 class="glow-text">ستورجيمنج</h1>
 
-  <div style="margin:30px;">
-    <h3>شحن شدات ببجي</h3>
-    <ul style="list-style:none; padding:0;">
-      <li>60 شدة - 50 جنيه</li>
-      <li>325 شدة - 250 جنيه</li>
-      <li>660 شدة - 480 جنيه</li>
-    </ul>
-
-    <h3>كارت سيارة</h3>
-    <p>السعر: 8000 جنيه</p>
+  <div class="box">
+    <h3>شحن شدات ببجي (خصم 50%)</h3>
+    <select id="uc">
+      <option value="30">60 شدة - 30 جنيه</option>
+      <option value="162">325 شدة - 162 جنيه</option>
+      <option value="330">660 شدة - 330 جنيه</option>
+    </select>
+    <input id="pubgId" placeholder="ID ببجي">
+    <button onclick="generateInvoice('شدات ببجي')">الدخول إلى الفاتورة / الدفع</button>
   </div>
 
-  <div style="margin:30px;">
-    <button onclick="window.location.href='https://chat.whatsapp.com/DUS3Tw1UKqhICikuwxKnvs?mode=hqrt3'">
-      دخول جروب الأسوار
+  <div class="box">
+    <h3>كارت سيارة</h3>
+    <p>السعر: 8000 جنيه</p>
+    <button onclick="generateInvoice('كارت سيارة')">الدخول إلى الفاتورة / الدفع</button>
+  </div>
+
+  <div class="box">
+    <button onclick="window.open('https://chat.whatsapp.com/DUS3Tw1UKqhICikuwxKnvs?mode=hqrt3','_blank')">
+      دخول جروب ستورجيمنج
     </button>
     <br>
-    <button onclick="window.location.href='https://wa.me/201206561893'">
+    <button onclick="window.open('https://wa.me/201206561893','_blank')">
       التواصل مع المالك على واتساب
     </button>
   </div>
 </div>
 
+<!-- صفحة الفاتورة -->
+<div class="container hidden" id="invoicePage">
+  <h1 class="glow-text">ستورجيمنج</h1>
+  <div class="success">تم الدفع بنجاح وتم وصول الخدمة</div>
+  <div class="table">
+    <div><span>رقم العملية</span><span id="o"></span></div>
+    <div><span>الخدمة</span><span id="type"></span></div>
+    <div><span>التفاصيل</span><span id="details"></span></div>
+    <div><span>السعر</span><span id="price"></span></div>
+    <div><span>ID ببجي</span><span id="pid"></span></div>
+    <div><span>تاريخ التنفيذ</span><span id="date"></span></div>
+  </div>
+</div>
+
 <script>
-// تشغيل صوت الترحيب
+function randomOrder(){
+  return Math.floor(100000 + Math.random()*900000);
+}
+function now(){
+  return new Date().toLocaleString();
+}
+
+// صوت الترحيب
 window.onload = function(){
-  let msg = new SpeechSynthesisUtterance("مرحبا بك في موقع استور جيمينج، للدخول دوس واحد للتوجه للموقع، وللتواصل مع المالك اضغط اثنين");
+  let msg = new SpeechSynthesisUtterance("مرحبا بك في موقع ستورجيمنج، للدخول اضغط واحد، للتواصل مع المالك اضغط اثنين");
   msg.lang = "ar-SA";
   window.speechSynthesis.speak(msg);
 }
@@ -111,6 +160,33 @@ function chooseOption(option){
       window.location.href = 'https://wa.me/201206561893';
     },2000);
   }
+}
+
+// إنشاء الفاتورة
+function generateInvoice(service){
+  let order = randomOrder();
+  let pubgId = document.getElementById('pubgId').value || '—';
+  let price = "";
+  let details = "";
+
+  if(service === "شدات ببجي"){
+    let ucValue = document.getElementById('uc').value;
+    details = ucValue + " شدة ببجي";
+    price = ucValue + " جنيه";
+  }else{
+    details = service;
+    price = "8000 جنيه";
+  }
+
+  document.getElementById('mainPage').classList.add('hidden');
+  document.getElementById('invoicePage').classList.remove('hidden');
+
+  document.getElementById('o').innerText = order;
+  document.getElementById('type').innerText = service;
+  document.getElementById('details').innerText = details;
+  document.getElementById('price').innerText = price;
+  document.getElementById('pid').innerText = pubgId;
+  document.getElementById('date').innerText = now();
 }
 </script>
 
